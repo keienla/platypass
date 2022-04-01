@@ -1,0 +1,36 @@
+@viewport {
+    width: auto, device-width;
+}
+
+html {
+    all: initial;
+    :where(*:not(svg, svg *), use) {
+      all: revert;
+    }
+}
+
+*, *::after, *::before{
+    box-sizing: inherit;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+// If user have prefers-reduced-motion: reduce as preference
+// Set animation duration to 0.001s for all
+// Like this animation is not visible
+// and js can detect when an animation is finished to continue some task
+@media
+    (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001s !important;
+    }
+}

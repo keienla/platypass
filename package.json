@@ -1,0 +1,23 @@
+{
+  "name": "platypass",
+  "version": "1.0.0",
+  "description": "A small library in SCSS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keienla/platypass.git"
+  },
+  "keywords": [
+    "SCSS",
+    "platypass"
+  ],
+  "author": "Thibault Meyer",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/keienla/platypass/issues"
+  },
+  "homepage": "https://github.com/keienla/platypass#readme"
+}
