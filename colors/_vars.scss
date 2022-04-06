@@ -1,8 +1,6 @@
 @use './../utils';
 @use 'sass:map';
-@use './names';
-@use './branding/default';
-@use './branding/overloads';
+@use './../modes';
 
 $colors-prefix: --color_ !default;
 $colors-black: rgba(0,0,0,.87) !default;
@@ -21,14 +19,14 @@ $colors: (
             color3: $colors-black,
             color4: $colors-white,
             color5: $colors-black
-        )
+        ),
     ),
     background: (
-        body: generate-mode((light: #F5F5F5, dark: #1F1F1F)),
-        card: generate-mode((light: #FFF, dark: #272727))
+        body: modes.generate-mode((light: #F5F5F5, dark: #1F1F1F)),
+        card: modes.generate-mode((light: #FFF, dark: #272727)),
         contrast: (
-            body: generate-mode((light: $colors-black, dark: $colors-white)),
-            card: generate-mode((light: $colors-black, dark: $colors-white)),
+            body: modes.generate-mode((light: $colors-black, dark: $colors-white)),
+            card: modes.generate-mode((light: $colors-black, dark: $colors-white)),
         )
     ),
 );
