@@ -1,12 +1,12 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add flex direction
 // => .flex-row
-@include class.insert-breackpoints-class('flex','flex-direction', row, column, row-reverse, column-reverse);
+@include mixins.insert-breackpoints-class('flex','flex-direction', row, column, row-reverse, column-reverse);
 
 // Add flex wrap
 // => .flex-wrap
-@include class.insert-breackpoints-class('flex','flex-wrap', wrap, nowrap, wrap-reverse);
+@include mixins.insert-breackpoints-class('flex','flex-wrap', wrap, nowrap, wrap-reverse);
 
 // Add Flex justify content
 // => .flex-justify-start
@@ -19,7 +19,7 @@ $_flex-justify : (
     evenly: space-evenly
 );
 
-@include class.insert-breackpoints-class('flex-justify','justify-content', $_flex-justify);
+@include mixins.insert-breackpoints-class('flex-justify','justify-content', $_flex-justify);
 
 // Add Flex align items / self / content
 // => .flex-align-items-start
@@ -31,8 +31,8 @@ $_flex-align-items-self : (
     stretch: stretch
 );
 
-@include class.insert-breackpoints-class('flex-align-items','align-items', $_flex-align-items-self);
-@include class.insert-breackpoints-class('flex-align-self','align-self', $_flex-align-items-self);
+@include mixins.insert-breackpoints-class('flex-align-items','align-items', $_flex-align-items-self);
+@include mixins.insert-breackpoints-class('flex-align-self','align-self', $_flex-align-items-self);
 
 $_flex-align-content : (
     start: flex-start,
@@ -42,4 +42,4 @@ $_flex-align-content : (
     between: space-between,
     around: space-around
 );
-@include class.insert-breackpoints-class('flex-align-content','align-content', $_flex-align-content);
+@include mixins.insert-breackpoints-class('flex-align-content','align-content', $_flex-align-content);

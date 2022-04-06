@@ -1,8 +1,8 @@
 @use './../spacers';
-@use './../utils/class';
+@use './mixins';
 
-@include class.insert-breackpoints-class('padding','padding', spacers.$spacers);
-@include class.insert-breackpoints-class('padding-top','padding-top', spacers.$spacers);
-@include class.insert-breackpoints-class('padding-right','padding-right', spacers.$spacers);
-@include class.insert-breackpoints-class('padding-bottom','padding-bottom', spacers.$spacers);
-@include class.insert-breackpoints-class('padding-left','padding-left', spacers.$spacers);
+@include mixins.insert-breackpoints-class('padding','padding', spacers.$spacers);
+@include mixins.insert-breackpoints-class('padding-top','padding-top', spacers.$spacers);
+@include mixins.insert-breackpoints-class('padding-right','padding-right', spacers.$spacers);
+@include mixins.insert-breackpoints-class('padding-bottom','padding-bottom', spacers.$spacers);
+@include mixins.insert-breackpoints-class('padding-left','padding-left', spacers.$spacers);

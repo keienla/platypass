@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A small library in SCSS",
   "main": "",
-  "scripts": {},
+  "scripts": {
+    "test": "jest ./run.test.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/keienla/platypass.git"
@@ -22,6 +24,8 @@
   },
   "homepage": "https://github.com/keienla/platypass#readme",
   "devDependencies": {
-    "sass": "^1.49.11"
+    "jest": "^27.5.1",
+    "sass": "^1.49.11",
+    "sass-true": "^6.1.0"
   }
 }

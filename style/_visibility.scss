@@ -1,5 +1,5 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add visibility
 // => .visibility-visible
-@include class.insert-breackpoints-class('visibility','visibility', visible, hidden);
+@include mixins.insert-breackpoints-class('visibility','visibility', visible, hidden);

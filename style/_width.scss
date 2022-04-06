@@ -1,4 +1,4 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add width
 // => .width-100
@@ -10,4 +10,4 @@ $_width: (
     '75': 75%,
     '100': 100%
 );
-@include class.insert-breackpoints-class('width','width', $_width);
+@include mixins.insert-breackpoints-class('width','width', $_width);

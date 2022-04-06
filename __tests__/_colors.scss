@@ -1,0 +1,27 @@
+@use '../node_modules/sass-true' as *;
+@use './../colors';
+
+@include describe('Colors [function]') {
+    @include it('should return the correct value for the given color') {
+        @include assert-equal(red, red);
+    };
+    @include it('should return content within pre-defined media query') {
+        @include assert {
+            @include output {
+                @media screen and (min-width: 1232px) {
+                    .breakpoint--lg {
+                        color: orange;
+                    }
+                }
+            }
+
+            @include expect {
+                @media screen and (min-width: 1232px) {
+                    .breakpoint--lg {
+                        color: orange;
+                    }
+                }
+            }
+        }
+    }
+}

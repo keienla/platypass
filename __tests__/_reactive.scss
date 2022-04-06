@@ -1,0 +1,8 @@
+@use '../node_modules/sass-true' as *;
+@use './../reactive';
+
+@include describe('Reactive [function]') {
+    @include it('TODO') {
+        @include assert-equal(red, red);
+    };
+}
