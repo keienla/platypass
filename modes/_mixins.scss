@@ -1,0 +1,14 @@
+@use './vars';
+@use 'sass:list';
+
+@mixin activeMode($mode) {
+    @if(list.index(vars.$modes, $mode)) {
+        @each $t in vars.$modes {
+            @if($t == $mode) {
+                #{vars.$modes-prefix}#{$t}: var(--ON);
+            } @else {
+                #{vars.$modes-prefix}#{$t}: var(--OFF);
+            }
+        }
+    }
+}

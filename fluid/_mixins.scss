@@ -1,0 +1,46 @@
+@use 'functions';
+@use './../utils/map';
+@use './../reactive';
+
+/// poly-sizing
+/// Generate linear interpolated size values through multiple break points
+/// @param $property - A string CSS property name
+/// @param $map - A SASS map of viewport unit and size value pairs
+/// @requires function linear-interpolation
+/// @requires function map-sort
+/// @example
+///   @include poly-sizing('font-size', (36rem: 1.375rem, 48rem: 1.5rem, 62rem: 2.125rem));
+/// @author Jake Wilson <jake.e.wilson@gmail.com>
+@mixin poly-sizing($property, $map) {
+    // Get the number of provided breakpoints
+    $length: length(map-keys($map));
+
+    // Error if the number of breakpoints is < 2
+    @if ($length < 2) {
+        @error "poly-sizing() $map requires at least values";
+    }
+
+    // Sort the map by viewport width (key)
+    $map: map.map-sort($map);
+    $keys: map-keys($map);
+
+    @for $i from 1 through ($length) {
+        @if($i != $length) {
+            @if $i == 1 {
+                @include reactive.min(0, nth($keys, $i)) {
+                    // Minimum size
+                    #{$property}: map-get($map, nth($keys,1));
+                };
+            }
+
+            @include reactive.min(nth($keys, $i), nth($keys, $i + 1)) {
+                #{$property}: functions.linear-interpolation((nth($keys,$i): map-get($map, nth($keys,$i)), nth($keys,($i+1)): map-get($map, nth($keys,($i + 1)))));
+            }
+        } @else {
+            // Maxmimum size
+            @include reactive.min(nth($keys, $length)) {
+                #{$property}: map-get($map, nth($keys,$length));
+            }
+        }
+    }
+}

@@ -1,9 +1,17 @@
+@use './../utils';
+
 @viewport {
     width: auto, device-width;
 }
 
 html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
     all: initial;
+    font-size: utils.$rem-baseline;
+    height: 100%;
+    line-height: initial;
+    width: 100%;
     :where(*:not(svg, svg *), use) {
       all: revert;
     }
@@ -11,11 +19,6 @@ html {
 
 *, *::after, *::before{
     box-sizing: inherit;
-}
-
-html {
-    height: 100%;
-    width: 100%;
 }
 
 body {

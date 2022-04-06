@@ -1,0 +1,27 @@
+@use './../modes';
+@use './../global-vars';
+@use 'sass:meta';
+
+// ! The color on/off work on var defined on same level or inside
+// ! so like here it's use on :root, can't change the value if set class on an over element than <html> or :root
+
+@if (meta.global-variable-exists('default-mode', modes)) {
+    :root {
+        @include modes.activeMode(modes.$default-mode);
+    }
+}
+
+@if (meta.global-variable-exists('dark-mode', modes)) {
+    @media (prefers-color-scheme: dark) {
+        :root {
+            @include modes.activeMode(modes.$dark-mode);
+        }
+    }
+}
+
+@each $mode in modes.$modes {
+    // Add the class on the <html> tag, if it's on the body it doesn't work
+    .#{global-vars.$default-prefix}mode-#{$mode} {
+        @include modes.activeMode($mode);
+    }
+}

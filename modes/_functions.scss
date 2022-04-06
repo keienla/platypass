@@ -1,0 +1,37 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use './vars';
+
+// From a map of ($modeName1: any, ...), will construct a var with all modes and any associated
+// @params {($modeName1: any, ...)} $map - the map of mode/any associated
+// @returns {string} will return a serie of 'var(--$modeName, any)'
+// ! Will construct only elements where key is in $modes var
+// @example
+// // Defined in global var in file anys/_modes.scss
+// $modes-prefix: --mode_;
+// $modes: 'light', 'dark';
+// // The code
+// $test: generate-mode((light: #fff, dark: #000, chicken: yellow));
+// @debug($test) => var(--mode_light, #fff) var(--mode_dark, #000)
+// So if the active mode is light for example, the result will be the color #fff
+@function generate-mode($map) {
+    @if(meta.type-of($map) == map) {
+        @each $mode in vars.$modes {
+            @if(map.has-key($map, $mode) == false) {
+                @warn '/!\\ the map "' + meta.inspect($map) + '" doesn\'t contain the key for the mode ' + meta.inspect($mode) + '. It can create some color problems if the mode ' + meta.inspect($mode) + ' is actif.'
+            }
+        }
+        $response: '';
+        @each $mode, $color in $map {
+            @if (list.index(vars.$modes, $mode)) {
+                $space: if($response == '', '', ' ');
+                $response: $response + $space + 'var(' + vars.$modes-prefix + $mode + ', ' + $color + ')';
+            }
+        }
+        @return string.unquote($response);
+    } @else {
+        @error 'Generate-mode argument $map must be a sass:map, but get the type "' + meta.type-of($map) + '" for ' meta.inspect($map) + '.';
+    }
+}

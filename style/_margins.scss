@@ -1,0 +1,23 @@
+@use './../spacers';
+@use './../utils/class';
+
+@include class.insert-breackpoints-class('margin','margin', auto, spacers.$spacers);
+@include class.insert-breackpoints-class('margin','margin', auto, spacers.$negative-spacers);
+
+@include class.insert-breackpoints-class('margin-top','margin-top', auto, spacers.$spacers);
+@include class.insert-breackpoints-class('margin-top','margin-top', auto, spacers.$negative-spacers);
+
+@include class.insert-breackpoints-class('margin-right','margin-right', auto, spacers.$spacers);
+@include class.insert-breackpoints-class('margin-right','margin-right', auto, spacers.$negative-spacers);
+
+@include class.insert-breackpoints-class('margin-bottom','margin-bottom', auto, spacers.$spacers);
+@include class.insert-breackpoints-class('margin-bottom','margin-bottom', auto, spacers.$negative-spacers);
+
+@include class.insert-breackpoints-class('margin-left','margin-left', auto, spacers.$spacers);
+@include class.insert-breackpoints-class('margin-left','margin-left', auto, spacers.$negative-spacers);
+
+@include class.insert-breackpoints-class('margin-inline-start','margin-inline-start', auto, spacers.$spacers);
+@include class.insert-breackpoints-class('margin-inline-start','margin-inline-start', auto, spacers.$negative-spacers);
+
+@include class.insert-breackpoints-class('margin-inline-end','margin-inline-end', auto, spacers.$spacers);
+@include class.insert-breackpoints-class('margin-inline-end','margin-inline-end', auto, spacers.$negative-spacers);

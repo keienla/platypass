@@ -1,0 +1,12 @@
+@use './../utils/class';
+
+// Set float position
+// .float-left
+@include class.insert-breackpoints-class('float','float', left, right, none);
+
+// Create .clearfix class for a breackpoints
+@include class.insert-breackpoints-class('clearfix::after') {
+    content: '';
+    display: table;
+    clear: both;
+};

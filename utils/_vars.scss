@@ -1,0 +1,166 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'list' as utils-list;
+
+$root-default: ":root" !default;
+$use-css-var: true !default;
+$var-separator: '_' !default;
+
+@function name($prefix, $key, $cumulative-key: '') {
+    @return #{$prefix}#{$cumulative-key}#{$key};
+}
+
+@function construct-getter($arrays, $keys, $prefix, $fallback: false, $true-val: false) {
+    @if($fallback == true) {
+        $true-val: $fallback;
+        $fallback: false;
+    }
+
+    /**
+    if $arrays is a list of map, try to find a value in all the list and return the first finded.
+    Else just return what founded in the map
+    */
+    @if type-of($arrays) == 'list' {
+        @each $array in $arrays {
+            $result: _get-data($array, $keys, $prefix, $fallback, $true-val, false);
+
+            @if($result != null) {
+                @return $result
+            }
+        }
+
+        @warn "Undefined #{$prefix} / #{$prefix-complement} / #{$key} in the given arrays";
+        @return null;
+    } @else {
+        @return _get-data($arrays, $keys, $prefix, $fallback, $true-val)
+    }
+};
+
+@function _get-data($array, $keys, $prefix, $fallback: false, $true-val: false, $debug: true) {
+    $prefix-complement: '';
+    $key: $keys;
+
+    @if(type-of($keys) == 'list' and list.length($keys) > 0) {
+        $array: find-element-in-map($array, utils-list.list-remove-index($keys, -1));
+        $key: list.nth($keys, -1);
+        $prefix-complement: get-prefix-complement($keys);
+    }
+
+    @if map.has-key($array, $key) {
+        @if (variable-exists(use-css-var)) {
+            @if $use-css-var == true {
+                @if $true-val == true {
+                    @return map-get($array, $key); //True Val
+                }
+                @else {
+                    @return var(name($prefix, $key, $prefix-complement), if($fallback, $fallback, map-get($array, $key))); //CSS Var
+                }
+            }
+            @else {
+                @return map-get($array, $key); //Disabled CSS Var
+            }
+        }
+        @else {
+            @return map-get($array, $key); //Disabled CSS Var
+        }
+    }
+    @else {
+        @if (variable-exists(use-css-var) and ($use-css-var == true or $use-css-var == 'true') and ($true-val == false or $true-val == 'false') and $fallback != false) {
+            // in case var created elsewhere, add the var
+            @return var(name($prefix, $key, $prefix-complement), $fallback); //CSS Var
+        } @else if($fallback) {
+            @return $fallback
+        };
+        @if $debug {
+            @debug $fallback;
+            @warn "Undefined #{$prefix} / #{$prefix-complement} / #{$key}";
+        }
+        @return null;
+    }
+}
+
+@mixin inject($map, $prefix, $class: $root-default, $cumulative-key: '', $deep: 0) {
+    @if (variable-exists(use-css-var)) {
+        @if $use-css-var == true {
+            @if($deep == 0) {
+                #{$class} {
+                    @include _inject-content($map, $prefix, $class, $cumulative-key)
+                }
+            } @else {
+                & {
+                    @include _inject-content($map, $prefix, $class, $cumulative-key)
+                }
+            }
+        }
+    }
+}
+
+@mixin _inject-content($map, $prefix, $class: $root-default, $cumulative-key: '') {
+    @each $key,
+    $value in $map {
+        @if type-of($value) == 'map' {
+            @include inject($value, $prefix, $class, $cumulative-key + $key + $var-separator, 1)
+        } @else {
+            @if $value {
+                #{name($prefix, $key, $cumulative-key)}: $value;
+            }
+        }
+    }
+}
+
+@function transform-to-var-map($map, $prefix, $keys: ()) {
+    $result: ();
+    $currentMap: find-element-in-map($map, $keys);
+
+    @if type-of($currentMap) != 'map' {
+        @error 'The element must be a map'
+    };
+
+    @each $key,
+    $value in $currentMap {
+        @if type-of($value) == 'map' {
+            $result: map.merge($result, (
+                $key: transform-to-var-map($map, $prefix, list.append($keys, $key))
+            ))
+        } @else {
+            $result: map.merge($result, (
+                $key: construct-getter($map, list.append($keys, $key), $prefix, false)
+            ))
+        }
+    }
+
+    @return $result;
+}
+
+@function find-element-in-map($map, $keys: ()) {
+    @if(type-of($keys) == 'list' and list.length($keys) > 0) {
+        $index: 1;
+        @while($index <= list.length($keys)) {
+            @if(map.has-key($map, list.nth($keys, $index))) {
+                $map: map.get($map, list.nth($keys, $index));
+            } @else {
+                @error "Undefined #{list.nth($keys, $index)}. Can't get element in map #{$map}";
+                @return null;
+            }
+
+            $index: $index + 1;
+        }
+    }
+
+    @return $map;
+}
+
+@function get-prefix-complement($keys: ()) {
+    $prefix-complement: '';
+
+    @if(type-of($keys) == 'list' and list.length($keys) > 0) {
+        $index: 1;
+        @while($index < list.length($keys)) {
+            $prefix-complement: $prefix-complement + list.nth($keys, $index) + $var-separator;
+
+            $index: $index + 1;
+        }
+    }
+
+    @return $prefix-complement;
+}

@@ -1,0 +1,45 @@
+@use './../utils';
+@use 'sass:math';
+
+// ------------------------------
+// Sass Variables
+// ------------------------------
+$spacers-reference: 4px !default;
+$spacers-prefix: --spacer_ !default;
+$spacers: (
+    0: 0,
+    1: (utils.rem($spacers-reference) * 1),
+    2: (utils.rem($spacers-reference) * 2),
+    3: (utils.rem($spacers-reference) * 3),
+    4: (utils.rem($spacers-reference) * 4),
+    5: (utils.rem($spacers-reference) * 5),
+    6: (utils.rem($spacers-reference) * 6),
+    7: (utils.rem($spacers-reference) * 7),
+    8: (utils.rem($spacers-reference) * 8),
+    9: (utils.rem($spacers-reference) * 9),
+    10: (utils.rem($spacers-reference) * 10)
+) !default;
+
+$negative-spacers: (
+    "1-negative": (utils.rem($spacers-reference) * -1),
+    "2-negative": (utils.rem($spacers-reference) * -2),
+    "3-negative": (utils.rem($spacers-reference) * -3),
+    "4-negative": (utils.rem($spacers-reference) * -4),
+    "5-negative": (utils.rem($spacers-reference) * -5),
+    "6-negative": (utils.rem($spacers-reference) * -6),
+    "7-negative": (utils.rem($spacers-reference) * -7),
+    "8-negative": (utils.rem($spacers-reference) * -8),
+    "9-negative": (utils.rem($spacers-reference) * -9),
+    "10-negative": (utils.rem($spacers-reference) * -10)
+) !default;
+
+// ------------------------------
+// Set spacer function
+// ------------------------------
+@function get($spacer, $true-val:false) {
+    @if( $spacer < 0) {
+        @return utils.construct-getter($negative-spacers, "#{math.abs($spacer)}-negative", $spacers-prefix, $true-val);
+    } @else {
+        @return utils.construct-getter($spacers, $spacer, $spacers-prefix, $true-val);
+    }
+}

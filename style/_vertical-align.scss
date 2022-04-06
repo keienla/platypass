@@ -1,0 +1,5 @@
+@use './../utils/class';
+
+// Add visibility
+// => .vertical-align-middle
+@include class.insert-breackpoints-class('vertical-align','vertical-align', baseline, sub, super, text-top, text-bottom, middle, top, bottom, inherit, initial, unset);

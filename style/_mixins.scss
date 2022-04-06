@@ -1,0 +1,92 @@
+@use './../reactive';
+@use './vars';
+@use './../utils/str-replace' as strr;
+@use 'sass:string';
+
+// Will generate some class with the parameters given.
+// The arguments are:
+// - $prefix: Can be empty, will be the beginning of the name of the class
+// - $property: the CSS property to add
+// - ...$values: list of all the values to set. This element can be a list or a map
+// -------------------------
+// ** With a list: **
+// @include insert-breackpoints-class($prefix: float, $property: float, left, right);
+// -> .float-left { float: left }
+// -> .float-right { float: right }
+// // And for all the breakpoints
+// -> @media only screen and (min-width: 20rem) { .xs:float-left { float: left } .xs:float-right { float: right } }
+// -------------------------
+// ** Without a prefix: **
+// @include insert-breackpoints-class($prefix: '', $property: float, left, right);
+// -> .left { float: left }
+// -> .right { float: right }
+// // And for all the breakpoints
+// -> @media only screen and (min-width: 20rem) { .xs:left { float: left } .xs:right { float: right } }
+// -------------------------
+// ** Without a map: **
+// $map: (
+//      l: left,
+//      r: right
+// )
+// @include insert-breackpoints-class($prefix: float, $property: float, $map, other);
+// -> .float-l { float: left }
+// -> .float-r { float: right }
+// -> .float-other { float: other }
+// // And for all the breakpoints
+// -> @media only screen and (min-width: 20rem) { .xs:float-l { float: left } .xs:float-r { float: right } .xs:float-other { float: other } }
+// -------------------------
+@mixin insert-breackpoints-class($prefix: '', $property: '', $values...) {
+    $default-class-name: '';
+    $dash: '';
+    @if($prefix != '') {
+        $default-class-name: '#{$prefix}';
+        $dash: '-';
+        .#{$default-class-name} {
+            @content;
+        }
+    }
+    @include _insert-property-values('#{global-vars.$default-prefix}#{$default-class-name}#{$dash}', $property, $values);
+
+    @each $bp, $value in reactive.$breakpoints {
+        @include reactive.min(reactive.get($bp)) {
+            $class-name: '#{$bp}\\\:#{global-vars.$default-prefix}#{$default-class-name}';
+            @include _insert-property-values('#{$class-name}#{$dash}', $property, $values);
+
+            .#{$class-name} {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin _insert-property-values($prefix, $property, $values) {
+    @if($property != '' and length($values) > 0) {
+        @each $value in $values {
+            @if(type-of($value) == 'map') {
+                @each $key, $v in $value {
+                    .#{$prefix}#{$key} {
+                        #{$property}: $v;
+                    }
+                    .#{$prefix}#{$key}-important {
+                        #{$property}: $v !important;
+                    }
+                }
+            } @else if(type-of($value) == 'list') {
+                $fullValue: '';
+                @for $i from 1 through length($value) {
+                    @if($i == 1) {
+                        $fullValue: nth($value, $i);
+                    } @else {
+                        $fullValue: '#{$fullValue} #{nth($value, $i)}';
+                    }
+                }
+
+                .#{$prefix}#{strr.str-replace($fullValue, ' ', '-')} { #{$property}: string.unquote($fullValue); }
+                .#{$prefix}#{strr.str-replace($fullValue, ' ', '-')}-important { #{$property}: string.unquote($fullValue) !important; }
+            } @else {
+                .#{$prefix}#{$value} { #{$property}: $value; }
+                .#{$prefix}#{$value}-important { #{$property}: $value !important; }
+            }
+        }
+    }
+}

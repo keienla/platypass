@@ -1,0 +1,75 @@
+@use 'sass:math';
+@use 'css-math' as css-math;
+
+//----------------------------------*\
+// TRIGONOMETRY FUNCTIONS
+// inspired by https://gist.github.com/stereokai/7666bfe93929b14c2dced148c79e0e97
+//----------------------------------*/
+
+// # Trigonometry in CSS
+//
+// - Through Taylor/Maclaurin polynomial representation: http://people.math.sc.edu/girardi/m142/handouts/10sTaylorPolySeries.pdf
+// - Useful if you don't want to use JS.
+// - With CSS Variables.
+// - `calc()` can't do power (x ^ y) so I used multiplication instead.
+
+// `--angle` is in radians! Convert from degrees using `α * π / 180` (or `α * 0.01745329251`) :)
+
+// $angle: degree angle. Must have 'deg' extension
+// Will transform a degree angle to a rad angle
+@function rad($angle) {
+    $unit: math.unit($angle);
+    $unitless: math.div($angle, ($angle * 0 + 1));
+    // If the angle has 'deg' as unit, convert to radians.
+    @if $unit == deg {
+        $unitless: math.div($unitless, 180) * math.$pi;
+    }
+    @return $unitless;
+}
+
+@function sinCosPart($angle, $exponent) {
+    @if($exponent == 0) {
+        @return 1;
+    }
+    @return '((' + css-math.cssPow($angle, $exponent, 'string') + ') / ' + css-math.factorial($exponent) + ')';
+}
+
+// Sine function representation
+@function sin($angle, $type: 'calc', $precision: 5) {
+    $sin: '0';
+    $symbol: '+';
+    @for $i from 1 through $precision {
+        $sin: $sin + ' ' + $symbol + ' ' + sinCosPart($angle, ($i * 2 - 1));
+        @if($symbol == '+') {
+            $symbol: '-'
+        } @else {
+            $symbol: '+'
+        }
+    }
+
+    @if ($type == 'string') {
+        @return $sin;
+    } @else {
+        @return 'calc(' + $sin + ')'
+    }
+}
+
+// Cosine function representation
+@function cos($angle, $type: 'calc', $precision: 5) {
+    $cos: '0';
+    $symbol: '+';
+    @for $i from 0 through ($precision - 1) {
+        $cos: $cos + ' ' + $symbol + ' ' + sinCosPart($angle, ($i * 2));
+        @if($symbol == '+') {
+            $symbol: '-'
+        } @else {
+            $symbol: '+'
+        }
+    }
+
+    @if ($type == 'string') {
+        @return $cos;
+    } @else {
+        @return 'calc(' + $cos + ')'
+    }
+}

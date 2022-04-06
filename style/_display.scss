@@ -1,0 +1,5 @@
+@use './../utils/class';
+
+// Add display properties
+// => .display-block
+@include class.insert-breackpoints-class('display','display', block, inline-block, flex, inline-flex, grid, contents, none, table, table-row, table-cell);

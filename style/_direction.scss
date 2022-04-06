@@ -1,0 +1,5 @@
+@use './../utils/class';
+
+// Set float position
+// .direction-ltr
+@include class.insert-breackpoints-class('direction','direction', ltr, rtl);

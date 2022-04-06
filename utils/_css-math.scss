@@ -1,0 +1,100 @@
+
+@use 'sass:math';
+
+// Create a css calc to create a pow function only in css
+// $number: the number to calcul each time
+// $exponent: int: the number of incrementation
+// $type: 'number' | 'string' | 'calc': if set to 'number', will return sass:math.pow and so the calcul and not the css calc, 'string' will return only the calcul without 'calc()', 'calc' will return the all thing
+// ex: cssPow(3,4) => "calc(3 * 3 * 3 * 3)"
+// ex: cssPow(3,4,'string') => "3 * 3 * 3 * 3"
+// ex: cssPow(3,4,'value') => 3 * 3 * 3 * 3 => 81
+// ex: cssPow(2, -1) => calc(1 / 2)
+@function cssPow($number, $exponent, $type: 'calc') {
+    @if($type == 'value') {
+        @return math.pow($number, $exponent);
+    }
+
+    @if($exponent == 0) {
+        @return 1;
+    } @else if($exponent == 1) {
+        @return $number
+    }
+
+    $response: '';
+
+    @if ($exponent > 0) {
+        @for $i from 1 through $exponent {
+            @if($i == 1) {
+                $response: $response + $number
+            } @else {
+                $response: $response + ' * ' + $number
+            }
+        }
+    } @else if ($exponent == 0) {
+        $response: $response + '1'
+    } @else {
+        $response: $response + '1';
+        @for $i from 1 through -$exponent {
+            $response: $response + ' / ' + $number
+        }
+    }
+
+    @if($type == 'string') {
+        @return $response;
+    } @else {
+        @return 'calc(' + $response + ')';
+    }
+}
+
+// Calcul the factorial of a number
+// $number: the POSITIVE number to factorial
+// ex: factorial(5) => 1 * 2 * 3 * 4 * 5 => 120
+@function factorial($number) {
+    $value: 1;
+
+    @if($number == 0) {
+        @return 1;
+    } @else if($number == 1) {
+        @return 1;
+    }
+
+    @for $i from 1 through $number {
+        $value: $value * $i
+    }
+
+    @return $value;
+}
+
+// Calcul the factorial of a number
+// $number: the POSITIVE number to factorial
+// $type: 'number' | 'string' | 'calc': if set to 'number', will return the calcul and not the css calc, 'string' will return only the calcul without 'calc()', 'calc' will return the all thing
+// ex: cssFactorial(5) => 'calc(1 * 2 * 3 * 4 * 5)'
+// ex: cssFactorial(5, 'string') => '1 * 2 * 3 * 4 * 5'
+// ex: cssFactorial(5, 'value') => 1 * 2 * 3 * 4 * 5 => 120
+@function cssFactorial($number, $type: 'calc') {
+    @if($type == 'value') {
+        @return factorial($number);
+    }
+
+    @if($number == 0) {
+        @return 1;
+    } @else if($number == 1) {
+        @return 1;
+    }
+
+    $response: '';
+
+    @for $i from 1 through $number {
+        @if($i == 1) {
+            $response: $response + $i
+        } @else {
+            $response: $response + ' * ' + $i
+        }
+    }
+
+    @if($type == 'string') {
+        @return $response;
+    } @else {
+        @return 'calc(' + $response + ')';
+    }
+}

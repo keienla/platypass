@@ -1,0 +1,22 @@
+@use './../utils/vars';
+@use './../utils/rem';
+
+// ------------------------------
+// Sass Variables
+// ------------------------------
+$breakpoints-prefix: --breakpoint_ !default;
+$breakpoints: (
+    xs: rem.rem(320px), // extra small (Smart Phone)
+    sm: rem.rem(600px), // small (Portrait Tablel)
+    md: rem.rem(960px), // medium (Landscape Tablets & Low-Res Laptops)
+    lg: rem.rem(1260px), // large (High-Res Laptops & Monitors)
+    xl: rem.rem(1920px), // extra large (Ultra High-Res Monitors)
+) !default;
+
+// ------------------------------
+// Set bp function
+// ------------------------------
+// Can't use CSS var in media queries. So $true-val is true because bp is use in majority for @media.
+@function get($breakpoint, $true-val:true) {
+    @return vars.construct-getter($breakpoints, $breakpoint, $breakpoints-prefix, $true-val);
+}

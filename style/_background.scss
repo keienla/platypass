@@ -1,0 +1,13 @@
+@use './../utils/class';
+
+// Add background Position
+// => .bg-center / .bg-right-top
+@include class.insert-breackpoints-class('bg','background-position', center, top, right, bottom, left, right top, right bottom, left top, left bottom);
+
+// Add background Repeat
+// .bg-repeat
+@include class.insert-breackpoints-class('bg','background-repeat', repeat, no-repeat, repeat-x, repeat-y);
+
+// Add background size
+// .bg-cover
+@include class.insert-breackpoints-class('bg','background-size', cover, contain, auto);

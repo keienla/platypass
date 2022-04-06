@@ -1,0 +1,56 @@
+@use './../utils';
+@use 'sass:map';
+@use './names';
+@use './branding/default';
+@use './branding/overloads';
+
+$colors-prefix: --color_ !default;
+$colors-black: rgba(0,0,0,.87) !default;
+$colors-white: rgba(255,255,255,.87) !default;
+
+$colors: (
+    primary: (
+        color1: #127369,
+        color2: #10403B,
+        color3: #8AA6A3,
+        color4: #4C5958,
+        color5: #BFBFBF,
+        contrast: (
+            color1: $colors-white,
+            color2: $colors-white,
+            color3: $colors-black,
+            color4: $colors-white,
+            color5: $colors-black
+        )
+    ),
+    background: (
+        body: generate-mode((light: #F5F5F5, dark: #1F1F1F)),
+        card: generate-mode((light: #FFF, dark: #272727))
+        contrast: (
+            body: generate-mode((light: $colors-black, dark: $colors-white)),
+            card: generate-mode((light: $colors-black, dark: $colors-white)),
+        )
+    ),
+);
+
+@function get-contrast($color, $hue, $fallback: false, $true-val: false) {
+    @if($fallback == true) {
+        $true-val: $fallback;
+        $fallback: false;
+    }
+
+    @return utils.construct-getter($colors, ($color, contrast, $hue), $colors-prefix, $fallback, $true-val);
+}
+
+@function get($color, $hue, $contrast: false, $fallback: false, $true-val: false){
+    @if($fallback == true) {
+        $true-val: $fallback;
+        $fallback: false;
+    }
+
+    @if $contrast {
+        @return get-contrast($color, $hue, $fallback, $true-val);
+    } @else {
+        @return utils.construct-getter($colors, ($color, $hue), $colors-prefix, $fallback, $true-val);
+    }
+}

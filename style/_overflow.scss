@@ -1,0 +1,13 @@
+@use './../utils/class';
+
+// Add overflow
+// => .overflow-visible
+$_overflow: (
+    visible: visible,
+    hidden: hidden,
+    auto: auto,
+    scroll: scroll
+);
+@include class.insert-breackpoints-class('overflow','overflow', $_overflow);
+@include class.insert-breackpoints-class('overflow-x','overflow-x', $_overflow);
+@include class.insert-breackpoints-class('overflow-y','overflow-y', $_overflow);

@@ -1,0 +1,5 @@
+@use './../utils/class';
+
+// Set float position
+// .cursor-grab
+@include class.insert-breackpoints-class('cursor','cursor', auto, default, none, help, pointer, progress, wait, move, grab, grabbing, not-allowed, zoom-in, zoom-out);

@@ -1,0 +1,5 @@
+@use './../utils/class';
+
+// Add visibility
+// => .visibility-visible
+@include class.insert-breackpoints-class('visibility','visibility', visible, hidden);
