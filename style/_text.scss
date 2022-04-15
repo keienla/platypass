@@ -1,13 +1,13 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add text align
 // => .text-left
-@include class.insert-breackpoints-class('text','text-align', left, right, center, justify);
+@include mixins.insert-breackpoints-class('text','text-align', left, right, center, justify);
 
 // Add text decoration
 // => .text-underline
-@include class.insert-breackpoints-class('text','text-decoration', underline, overline, line-through);
+@include mixins.insert-breackpoints-class('text','text-decoration', underline, overline, line-through);
 
 // Add text transform
 // => .text-uppercase
-@include class.insert-breackpoints-class('text','text-transform', lowercase, uppercase, capitalize);
+@include mixins.insert-breackpoints-class('text','text-transform', lowercase, uppercase, capitalize);

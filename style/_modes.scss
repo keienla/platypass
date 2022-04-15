@@ -1,5 +1,5 @@
 @use './../modes';
-@use './../global-vars';
+@use './vars';
 @use 'sass:meta';
 
 // ! The color on/off work on var defined on same level or inside
@@ -21,7 +21,7 @@
 
 @each $mode in modes.$modes {
     // Add the class on the <html> tag, if it's on the body it doesn't work
-    .#{global-vars.$default-prefix}mode-#{$mode} {
+    .#{vars.$default-prefix}mode-#{$mode} {
         @include modes.activeMode($mode);
     }
 }

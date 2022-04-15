@@ -1,4 +1,4 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add overflow
 // => .overflow-visible
@@ -8,6 +8,6 @@ $_overflow: (
     auto: auto,
     scroll: scroll
 );
-@include class.insert-breackpoints-class('overflow','overflow', $_overflow);
-@include class.insert-breackpoints-class('overflow-x','overflow-x', $_overflow);
-@include class.insert-breackpoints-class('overflow-y','overflow-y', $_overflow);
+@include mixins.insert-breackpoints-class('overflow','overflow', $_overflow);
+@include mixins.insert-breackpoints-class('overflow-x','overflow-x', $_overflow);
+@include mixins.insert-breackpoints-class('overflow-y','overflow-y', $_overflow);

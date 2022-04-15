@@ -1,5 +1,5 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add position
 // => .position-absolute
-@include class.insert-breackpoints-class('position','position', static, absolute, relative, fixed, sticky);
+@include mixins.insert-breackpoints-class('position','position', static, absolute, relative, fixed, sticky);

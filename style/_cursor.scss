@@ -1,5 +1,5 @@
-@use './../utils/class';
+@use './mixins';
 
 // Set float position
 // .cursor-grab
-@include class.insert-breackpoints-class('cursor','cursor', auto, default, none, help, pointer, progress, wait, move, grab, grabbing, not-allowed, zoom-in, zoom-out);
+@include mixins.insert-breackpoints-class('cursor','cursor', auto, default, none, help, pointer, progress, wait, move, grab, grabbing, not-allowed, zoom-in, zoom-out);

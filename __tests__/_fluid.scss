@@ -1,0 +1,8 @@
+@use 'true' as *;
+@use './../fluid';
+
+@include describe('Fluid [function]') {
+    @include it('TODO') {
+        @include assert-equal(red, red);
+    };
+}

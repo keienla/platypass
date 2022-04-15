@@ -1,9 +1,9 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add Grid justify self
 // => .grid-justify-self-start
-@include class.insert-breackpoints-class('grid-justify-self','justify-self', auto, normal, stretch, start, end, center, left, right);
+@include mixins.insert-breackpoints-class('grid-justify-self','justify-self', auto, normal, stretch, start, end, center, left, right);
 
 // Add Grid justify self
 // => .grid-justify-self-start
-@include class.insert-breackpoints-class('grid-justify-items','justify-items', auto, normal, stretch, start, end, center, left, right);
+@include mixins.insert-breackpoints-class('grid-justify-items','justify-items', auto, normal, stretch, start, end, center, left, right);

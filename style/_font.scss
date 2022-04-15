@@ -1,12 +1,12 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add font weight
 // => .weight-bold
-@include class.insert-breackpoints-class('weight','font-weight', normal, bold, lighter, bolder, 100, 200, 300, 400, 500, 600, 700, 800, 900);
+@include mixins.insert-breackpoints-class('weight','font-weight', normal, bold, lighter, bolder, 100, 200, 300, 400, 500, 600, 700, 800, 900);
 
 // Add font style
 // => .style-italic
-@include class.insert-breackpoints-class('style','font-style', normal, italic, oblique);
+@include mixins.insert-breackpoints-class('style','font-style', normal, italic, oblique);
 
 // Add font size
 // => .font-size-68
@@ -23,4 +23,4 @@ $_font-sizes: (
     42: 42px,
     68: 68px,
 );
-@include class.insert-breackpoints-class('font-size','font-size', $_font-sizes);
+@include mixins.insert-breackpoints-class('font-size','font-size', $_font-sizes);

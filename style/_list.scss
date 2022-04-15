@@ -1,9 +1,9 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add list position
 // => .list-inside
-@include class.insert-breackpoints-class('list','list-style-position', inside, outside);
+@include mixins.insert-breackpoints-class('list','list-style-position', inside, outside);
 
 // Add list style type
 // => .list-disc
-@include class.insert-breackpoints-class('list','list-style-type', circle, decimal, disc, lower-alpha, lower-roman, none, square, upper-alpha, upper-roman, );
+@include mixins.insert-breackpoints-class('list','list-style-type', circle, decimal, disc, lower-alpha, lower-roman, none, square, upper-alpha, upper-roman, );
