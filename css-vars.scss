@@ -3,7 +3,7 @@
 @use 'colors';
 @use 'spacers';
 
-@include vars.inject(colors.$branding, colors.$colors-prefix);
+@include vars.inject(colors.$colors, colors.$colors-prefix);
 @include vars.inject(spacers.$negative-spacers, spacers.$spacers-prefix);
 @include vars.inject(spacers.$spacers, spacers.$spacers-prefix);
 @include vars.inject(reactive.$breakpoints, reactive.$breakpoints-prefix);
