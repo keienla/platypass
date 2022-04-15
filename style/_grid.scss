@@ -1,49 +1,46 @@
 @use './../spacers';
 @use './../reactive';
-@use './../global-vars';
+@use './vars';
 
-$grid-columns: 12 !default;
-$grid-rows: 24 !default;
-
-.#{global-vars.$default-prefix}grid {
+.#{vars.$default-prefix}grid {
     display: grid;
     grid-template-columns: repeat(vars.$grid-columns, minmax(0, 1fr));
     grid-gap: var(--container-gap, #{spacers.get(1)});
 }
-.#{global-vars.$default-prefix}is-dense {
+.#{vars.$default-prefix}is-dense {
     grid-auto-flow: dense;
 }
 
-.#{global-vars.$default-prefix}has-col-all {
+.#{vars.$default-prefix}has-col-all {
     grid-column: 1 / -1;
 }
 
-.#{global-vars.$default-prefix}has-row-all {
+.#{vars.$default-prefix}has-row-all {
     grid-row: 1 / -1;
 }
 
-.#{global-vars.$default-prefix}grid-line-break {
+.#{vars.$default-prefix}grid-line-break {
     grid-column-start: 1;
 }
 
 @for $i from 1 through vars.$grid-columns {
-    .#{global-vars.$default-prefix}has-col-#{$i} {
+    .#{vars.$default-prefix}has-col-#{$i} {
         grid-column-end: span $i;
     }
 
-    .#{global-vars.$default-prefix}has-cols-#{$i} {
+    .#{vars.$default-prefix}has-cols-#{$i} {
         grid-template-columns: repeat($i, minmax(0, 1fr));
     }
 }
 
 @for $i from 1 through vars.$grid-rows {
-    .#{global-vars.$default-prefix}has-row-#{$i} {
+    .#{vars.$default-prefix}has-row-#{$i} {
         grid-row: span $i;
     }
 }
 
 @each $key, $spacer in spacers.$spacers {
-    .#{global-vars.$default-prefix}has-grid-gap-#{$key} {
+    .#{vars.$default-prefix}has-grid-gap-#{$key} {
         grid-gap: spacers.get($key);
     }
 }
@@ -52,42 +49,42 @@ $grid-rows: 24 !default;
 @each $bp, $bpKey in reactive.$breakpoints {
     @include reactive.min(reactive.get($bp)) {
         // Full col item
-        .#{$bp}\:#{global-vars.$default-prefix}has-col-all {
+        .#{$bp}\:#{vars.$default-prefix}has-col-all {
             grid-column: 1 / -1;
         }
 
         // Full row item
-        .#{$bp}\:#{global-vars.$default-prefix}has-row-all {
+        .#{$bp}\:#{vars.$default-prefix}has-row-all {
             /* autoprefixer: off */
             grid-row: 1 / -1;
         }
 
         // Back to line
-        .#{$bp}\:#{global-vars.$default-prefix}grid-line-break {
+        .#{$bp}\:#{vars.$default-prefix}grid-line-break {
             grid-column-start: 1;
         }
 
         // Set number of col
         @for $i from 1 through vars.$grid-columns {
-            .#{$bp}\:#{global-vars.$default-prefix}has-col-#{$i} {
+            .#{$bp}\:#{vars.$default-prefix}has-col-#{$i} {
                 grid-column-end: span $i;
             }
 
-            .#{$bp}\:#{global-vars.$default-prefix}has-cols-#{$i} {
+            .#{$bp}\:#{vars.$default-prefix}has-cols-#{$i} {
                 grid-template-columns: repeat($i, minmax(0, 1fr));
             }
         }
 
         // Set number of row
         @for $i from 1 through vars.$grid-rows {
-            .#{$bp}\:#{global-vars.$default-prefix}has-row-#{$i} {
+            .#{$bp}\:#{vars.$default-prefix}has-row-#{$i} {
                 grid-row: span $i;
             }
         }
 
         // Set grid gap
         @each $key, $spacer in spacers.$spacers {
-            .#{$bp}\:#{global-vars.$default-prefix}has-grid-gap-#{$key} {
+            .#{$bp}\:#{vars.$default-prefix}has-grid-gap-#{$key} {
                 grid-gap: spacers.get($key);
             }
         }

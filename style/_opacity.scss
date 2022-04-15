@@ -1,4 +1,4 @@
-@use './../utils/class';
+@use './mixins';
 
 // Add opacity
 // => .opacity-25
@@ -10,4 +10,4 @@ $_opacity: (
     '75': .75,
     '100': 1
 );
-@include class.insert-breackpoints-class('opacity','opacity', $_opacity);
+@include mixins.insert-breackpoints-class('opacity','opacity', $_opacity);

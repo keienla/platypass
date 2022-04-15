@@ -45,11 +45,11 @@
             @content;
         }
     }
-    @include _insert-property-values('#{global-vars.$default-prefix}#{$default-class-name}#{$dash}', $property, $values);
+    @include _insert-property-values('#{vars.$default-prefix}#{$default-class-name}#{$dash}', $property, $values);
 
     @each $bp, $value in reactive.$breakpoints {
         @include reactive.min(reactive.get($bp)) {
-            $class-name: '#{$bp}\\\:#{global-vars.$default-prefix}#{$default-class-name}';
+            $class-name: '#{$bp}\\\:#{vars.$default-prefix}#{$default-class-name}';
             @include _insert-property-values('#{$class-name}#{$dash}', $property, $values);
 
             .#{$class-name} {
