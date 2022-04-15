@@ -29,7 +29,7 @@ $colors: (
             card: modes.generate-mode((light: $colors-black, dark: $colors-white)),
         )
     ),
-);
+) !default;
 
 @function get-contrast($color, $hue, $fallback: false, $true-val: false) {
     @if($fallback == true) {
