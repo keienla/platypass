@@ -4,6 +4,10 @@
     width: auto, device-width;
 }
 
+:where(*:not(svg, svg *), use) {
+    all: revert;
+}
+
 html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -13,9 +17,6 @@ html {
     line-height: initial;
     scroll-behavior: smooth;
     width: 100%;
-    :where(*:not(svg, svg *), use) {
-      all: revert;
-    }
 }
 
 *, *::after, *::before{
