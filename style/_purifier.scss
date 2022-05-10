@@ -11,6 +11,7 @@ html {
     font-size: utils.$rem-baseline;
     height: 100%;
     line-height: initial;
+    scroll-behavior: smooth;
     width: 100%;
     :where(*:not(svg, svg *), use) {
       all: revert;
